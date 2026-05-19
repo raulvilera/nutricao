@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>Ciências – Celular (Grupo)</title>
+<style>
+:root{
+  --green:#1a6b3c;--green-l:#e8f5ee;--green-m:#2d9b5a;
+  --amber:#b45309;--amber-l:#fef3c7;
+  --red:#b91c1c;--red-l:#fee2e2;
+  --blue:#1e40af;--blue-l:#dbeafe;
+  --gray:#374151;--gray-l:#f3f4f6;
+  --border:#d1d5db;--text:#111827;--muted:#6b7280;
+  --white:#fff;--r:10px;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0fdf4;color:var(--text);font-size:15px;min-height:100vh}
+
+/* HEADER */
+.hdr{background:var(--green);color:#fff;padding:14px 16px 10px;text-align:center}
+.hdr h1{font-size:15px;font-weight:700;letter-spacing:.04em}
+.hdr p{font-size:12px;opacity:.85;margin-top:2px}
+
+/* SCREEN */
+.screen{display:none;padding:16px;max-width:480px;margin:0 auto}
+.screen.active{display:block}
+
+/* CARD */
+.card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
+.card-title{font-size:13px;font-weight:700;color:var(--green);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+
+/* FORM */
+label{font-size:12px;color:var(--muted);display:block;margin-bottom:3px;font-weight:600}
+select,input{width:100%;padding:9px 10px;border:1px solid var(--border);border-radius:8px;font-size:14px;background:#fff;color:var(--text);margin-bottom:10px;font-family:inherit}
+select:focus,input:focus{outline:none;border-color:var(--green)}
+
+/* MEMBER ROWS */
+.mrow{display:grid;grid-template-columns:22px 1fr 46px;gap:6px;align-items:center;margin-bottom:6px;transition:max-height .3s,opacity .3s,margin .3s;max-height:48px;overflow:hidden}
+.mrow.gone{max-height:0;opacity:0;margin:0;pointer-events:none}
+.midx{font-size:13px;font-weight:600;color:var(--muted);text-align:right}
+.msel{margin-bottom:0}
+.mnum{font-size:13px;font-weight:700;color:var(--green);text-align:center;border-bottom:1.5px solid var(--green);padding:2px 0}
+
+/* BUTTONS */
+.btn{width:100%;padding:12px;border:none;border-radius:var(--r);font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .18s}
+.btn-green{background:var(--green);color:#fff}
+.btn-green:hover{background:var(--green-m)}
+.btn-green:disabled{background:#9ca3af;cursor:default}
+.btn-outline{background:#fff;color:var(--green);border:1.5px solid var(--green)}
+.btn-sm{padding:8px 14px;font-size:13px;width:auto}
+.btn-amber{background:#d97706;color:#fff}
+
+/* SCAN SLOTS */
+.scan-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
+.slot{border:2px dashed var(--border);border-radius:var(--r);min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden;background:var(--gray-l);transition:border-color .2s}
+.slot:hover,.slot:active{border-color:var(--green-m);background:var(--green-l)}
+.slot.filled{border-style:solid;border-color:var(--green-m)}
+.slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
+.slot .ov{position:absolute;inset:0;background:rgba(0,0,0,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:600;gap:4px}
+.slot-n{position:absolute;top:5px;left:6px;background:var(--green);color:#fff;font-size:10px;font-weight:700;padding:1px 7px;border-radius:10px;z-index:2}
+.slot-icon{font-size:26px;margin-bottom:4px}
+.slot-lbl{font-size:11px;font-weight:600;color:var(--muted);text-align:center;line-height:1.3}
+.rm-btn{position:absolute;top:5px;right:6px;background:rgba(185,28,28,.85);color:#fff;border:none;border-radius:50%;width:22px;height:22px;font-size:13px;cursor:pointer;z-index:3;display:flex;align-items:center;justify-content:center;line-height:1}
+
+/* STATUS BADGES */
+.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700}
+.badge-green{background:var(--green-l);color:var(--green)}
+.badge-amber{background:var(--amber-l);color:var(--amber)}
+.badge-blue{background:var(--blue-l);color:var(--blue)}
+
+/* SESSION CODE */
+.code-box{background:var(--green);color:#fff;border-radius:var(--r);padding:20px;text-align:center;margin-bottom:14px}
+.code-box .code{font-size:48px;font-weight:900;letter-spacing:.2em;line-height:1}
+.code-box .lbl{font-size:12px;opacity:.8;margin-top:6px}
+
+/* FOOD RESULTS */
+.food-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
+.food-item:last-child{border-bottom:none}
+.food-emoji{font-size:28px;flex-shrink:0;width:40px;text-align:center}
+.food-info{}
+.food-name{font-size:13px;font-weight:700;color:var(--green)}
+.food-cat{font-size:11px;color:var(--muted);margin-bottom:3px}
+.food-desc{font-size:12px;color:var(--gray);line-height:1.4}
+.pills{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px}
+.pill{font-size:10px;font-weight:600;padding:1px 7px;border-radius:10px}
+.pg{background:var(--green-l);color:var(--green)}
+.pa{background:var(--amber-l);color:var(--amber)}
+.pb{background:var(--blue-l);color:var(--blue)}
+.pr{background:var(--red-l);color:var(--red)}
+
+/* LOADER */
+.loader{text-align:center;padding:30px 16px;display:none}
+.loader.on{display:block}
+.spin{width:38px;height:38px;border:3px solid var(--green-l);border-top-color:var(--green);border-radius:50%;animation:sp .8s linear infinite;margin:0 auto 12px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.loader p{font-size:13px;color:var(--muted)}
+
+/* ALERT */
+.alert{padding:10px 12px;border-radius:8px;font-size:13px;margin-bottom:12px;line-height:1.5}
+.ai{background:var(--blue-l);color:var(--blue);border-left:3px solid var(--blue)}
+.as{background:var(--green-l);color:var(--green);border-left:3px solid var(--green)}
+.aw{background:var(--amber-l);color:var(--amber);border-left:3px solid #d97706}
+
+/* TIMER */
+.timer-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.timer{font-size:13px;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+
+/* META */
+.meta{font-size:12px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
+.meta strong{color:var(--green)}
+
+/* QR / SHARE */
+.share-area{background:var(--gray-l);border-radius:var(--r);padding:14px;text-align:center;margin-bottom:12px}
+.share-area p{font-size:13px;color:var(--muted);margin-bottom:8px}
+
+/* NOTEBOOK STATUS */
+.nb-list{margin-top:8px}
+.nb-item{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px}
+.nb-item:last-child{border-bottom:none}
+.nb-prog{font-size:11px;color:var(--muted)}
+</style>
+</head>
+<body>
+
+<div class="hdr">
+  <h1>📱 Ciências — Tabelas Nutricionais</h1>
+  <p>E.E. Prof.ª Wanda Mascagni de Sá · 8º Ano A</p>
+</div>
+
+<!-- ── TELA 1: GRUPO ── -->
+<div class="screen active" id="s-grupo">
+  <div class="card">
+    <div class="card-title">👥 Dados do grupo</div>
+    <div class="timer-row">
+      <span style="font-size:12px;color:var(--muted)">Grupo:</span>
+      <span class="badge badge-green" id="grp-badge">Grupo ___</span>
+      <span class="timer" id="timer-lbl">⏱ 0:00</span>
+    </div>
+
+    <!-- 5 member rows -->
+    <div id="mrows">
+      <div class="mrow" id="mr0"><span class="midx">1.</span><select class="msel" id="ms0" onchange="onSel(0)"></select><div class="mnum" id="mn0">___</div></div>
+      <div class="mrow" id="mr1"><span class="midx">2.</span><select class="msel" id="ms1" onchange="onSel(1)"></select><div class="mnum" id="mn1">___</div></div>
+      <div class="mrow gone" id="mr2"><span class="midx">3.</span><select class="msel" id="ms2" onchange="onSel(2)"></select><div class="mnum" id="mn2">___</div></div>
+      <div class="mrow gone" id="mr3"><span class="midx">4.</span><select class="msel" id="ms3" onchange="onSel(3)"></select><div class="mnum" id="mn3">___</div></div>
+      <div class="mrow gone" id="mr4"><span class="midx">5.</span><select class="msel" id="ms4" onchange="onSel(4)"></select><div class="mnum" id="mn4">___</div></div>
+    </div>
+    <div class="meta">
+      <span>Série: <strong>8º Ano</strong></span>
+      <span>Turma: <strong>8ºA</strong></span>
+      <span>Data: <strong id="today"></strong></span>
+    </div>
+  </div>
+  <button class="btn btn-green" id="btn-conf" onclick="confirmarGrupo()" disabled>✓ Confirmar grupo</button>
+</div>
+
+<!-- ── TELA 2: SCAN ── -->
+<div class="screen" id="s-scan">
+  <div class="code-box">
+    <div class="lbl">Código do grupo — diga aos colegas</div>
+    <div class="code" id="codigo-display">------</div>
+    <div class="lbl" id="members-display"></div>
+  </div>
+  <div class="alert ai">📌 Use este celular para fotografar as 4 tabelas nutricionais. Os colegas abrem o <strong>notebook.html</strong> e digitam o código acima.</div>
+  <div class="card">
+    <div class="card-title">📋 Fotografar as 4 Tabelas Nutricionais</div>
+    <div class="scan-grid" id="scan-grid">
+      <div class="slot" id="sl0" onclick="pickFile(0)"><span class="slot-n">1</span><span class="slot-icon">📋</span><span class="slot-lbl">Tabela Nutricional 1<br><small>Toque para foto</small></span></div>
+      <div class="slot" id="sl1" onclick="pickFile(1)"><span class="slot-n">2</span><span class="slot-icon">📋</span><span class="slot-lbl">Tabela Nutricional 2<br><small>Toque para foto</small></span></div>
+      <div class="slot" id="sl2" onclick="pickFile(2)"><span class="slot-n">3</span><span class="slot-icon">📋</span><span class="slot-lbl">Tabela Nutricional 3<br><small>Toque para foto</small></span></div>
+      <div class="slot" id="sl3" onclick="pickFile(3)"><span class="slot-n">4</span><span class="slot-icon">📋</span><span class="slot-lbl">Tabela Nutricional 4<br><small>Toque para foto</small></span></div>
+    </div>
+    <input type="file" id="file-in" accept="image/*" capture="environment" style="display:none" onchange="gotFile(event)">
+    <div style="display:flex;gap:8px;flex-wrap:wrap">
+      <button class="btn btn-green" id="btn-analisar" onclick="analisar()" disabled>Leitor de Tabela Nutricional</button>
+      <button class="btn btn-outline btn-sm" onclick="demoData()">📦 Exemplo</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TELA 3: LOADER ── -->
+<div class="screen" id="s-load">
+  <div class="loader on">
+    <div class="spin"></div>
+    <p id="load-txt">Lendo as tabelas nutricionais com IA…</p>
+    <p style="font-size:12px;color:var(--muted);margin-top:6px">Os notebooks serão atualizados automaticamente</p>
+  </div>
+</div>
+
+<!-- ── TELA 4: RESULTADO ── -->
+<div class="screen" id="s-result">
+  <div class="code-box" style="padding:12px 16px">
+    <div class="lbl">Código do grupo</div>
+    <div class="code" style="font-size:36px" id="codigo-result">------</div>
+  </div>
+  <div class="alert as">✅ Análise concluída! Os notebooks já receberam as questões automaticamente.</div>
+  <div class="card">
+    <div class="card-title">🍽️ Alimentos identificados</div>
+    <div id="food-list"></div>
+  </div>
+  <div class="card">
+    <div class="card-title">💻 Notebooks conectados</div>
+    <div class="nb-list" id="nb-list">
+      <p style="font-size:13px;color:var(--muted)">Aguardando conexão dos notebooks…</p>
+    </div>
+  </div>
+  <button class="btn btn-outline" onclick="novaAtividade()" style="margin-top:4px">🔄 Nova atividade</button>
+</div>
+
+<script>
+// ── CONFIG SUPABASE ──────────────────────────
+const SB_URL  = 'https://nifnghwqrdvzovwzcqwp.supabase.co';
+const SB_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5pZm5naHdxcmR2em92d3pjcXdwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NzI1ODAsImV4cCI6MjA5NDI0ODU4MH0.ozRD7uKnBRN1zliflZ8tVM68geslkDaqZobWMYFZJz4';
+const HEADERS = {'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY};
+
+// ── ALUNOS ───────────────────────────────────
+const ALUNOS = [
+  {n:1,nome:'Alice Cardoso de Alcantara'},
+  {n:3,nome:'Ana Luiza Valença Paiva'},
+  {n:5,nome:'Bryan Diniz Silva'},
+  {n:6,nome:'Carlos Eduardo Menezes Machado'},
+  {n:7,nome:'Evandro Cutolo Teixeira'},
+  {n:9,nome:'Gabriela Santos Costa'},
+  {n:11,nome:'Guilherme Carmo Rodrigues'},
+  {n:12,nome:'Gustavo Henrique da Silva'},
+  {n:13,nome:'Isaac Fernandes de Andrade'},
+  {n:15,nome:'Kelvin Duarte Gonçalves'},
+  {n:16,nome:'Laura Vitória Rocha'},
+  {n:18,nome:'Letícia Custódio Lima'},
+  {n:19,nome:'Lucas Eduardo da Silva Santana'},
+  {n:20,nome:'Matheus Kauã dos Santos Nascimento'},
+  {n:21,nome:'Mayara Caetano de Oliveira Pina'},
+  {n:22,nome:'Miguel Lima de Mesquita'},
+  {n:24,nome:'Nicolas Rocha Silva'},
+  {n:25,nome:'Paolla Michelline dos Santos Marques'},
+  {n:27,nome:'Pedro Henrique Corrêa de Brito'},
+  {n:28,nome:'Pedro Leonardo de Andrade Marques'},
+  {n:29,nome:'Rafael Henrique Siqueira Bernardes Zia'},
+  {n:30,nome:'Raphael Mathias Nunes Miranda'},
+  {n:33,nome:'Ryan Gabriel Pereira de Sousa'},
+  {n:34,nome:'Samuel Alves da Costa'},
+  {n:35,nome:'Sofia Azeredo Cubas'},
+  {n:36,nome:'Sophia Lacerda Andrade'},
+  {n:37,nome:'Thaylla Duanny Venâncio Scaquito'},
+  {n:38,nome:'Thays Rodrigues da Silva'},
+  {n:39,nome:'Victor Henrique Benvindo'},
+  {n:40,nome:'Manoella dos Anjos Santos'},
+  {n:41,nome:'Mariana Charrua Gaia Mion Silva'}
+];
+
+// ── STATE ────────────────────────────────────
+let grpCounter = parseInt(localStorage.getItem('wanda_grp')||'0');
+let timerInt = null, timerSec = 0, timerOn = false;
+let currentSlot = null;
+let imgs = [null,null,null,null];
+let sessaoId = null, codigoSessao = null;
+let realtimeChan = null;
+
+// ── INIT ─────────────────────────────────────
+(function(){
+  document.getElementById('today').textContent = new Date().toLocaleDateString('pt-BR');
+  document.getElementById('grp-badge').textContent = 'Grupo '+(grpCounter+1);
+  const opts = '<option value="">— Selecionar —</option>'+ALUNOS.map(a=>`<option value="${a.n}">${a.nome}</option>`).join('');
+  for(let i=0;i<5;i++) document.getElementById('ms'+i).innerHTML = opts;
+})();
+
+// ── TIMER ────────────────────────────────────
+function startTimer(){
+  if(timerOn) return; timerOn=true;
+  timerInt = setInterval(()=>{
+    timerSec++;
+    const m=Math.floor(timerSec/60), s=timerSec%60;
+    document.getElementById('timer-lbl').textContent='⏱ '+m+':'+(s<10?'0':'')+s;
+  },1000);
+}
+function stopTimer(){ clearInterval(timerInt); }
+
+// ── MEMBER SELECTS ───────────────────────────
+function getChosen(){ return [0,1,2,3,4].map(i=>parseInt(document.getElementById('ms'+i).value)||null); }
+
+function onSel(idx){
+  startTimer();
+  const v = parseInt(document.getElementById('ms'+idx).value)||null;
+  document.getElementById('mn'+idx).textContent = v ? 'N°'+v : '___';
+  rebuildOpts();
+  revealSlots();
+  checkConfBtn();
+}
+
+function rebuildOpts(){
+  const chosen = getChosen();
+  for(let i=0;i<5;i++){
+    const sel=document.getElementById('ms'+i);
+    const cur=sel.value;
+    const others=chosen.filter((_,j)=>j!==i);
+    sel.innerHTML='<option value="">— Selecionar —</option>'+
+      ALUNOS.map(a=>`<option value="${a.n}" ${others.includes(a.n)?'disabled style="color:#9ca3af"':''}>${a.nome}</option>`).join('');
+    sel.value=cur;
+  }
+}
+
+function revealSlots(){
+  const chosen=getChosen();
+  let last=-1;
+  for(let i=4;i>=0;i--) if(chosen[i]){last=i;break;}
+  const showTo=Math.min(4,Math.max(1,last+1));
+  for(let i=0;i<5;i++) document.getElementById('mr'+i).classList.toggle('gone',i>showTo);
+}
+
+function checkConfBtn(){
+  const any=getChosen().some(Boolean);
+  document.getElementById('btn-conf').disabled=!any;
+}
+
+// ── CONFIRMAR GRUPO ──────────────────────────
+async function confirmarGrupo(){
+  stopTimer();
+  grpCounter++;
+  localStorage.setItem('wanda_grp',grpCounter);
+
+  const membros = getChosen().filter(Boolean).map(n=>ALUNOS.find(a=>a.n===n));
+  const codigo = gerarCodigo();
+  codigoSessao = codigo;
+
+  // Inserir sessão no Supabase
+  const res = await sbPost('sessoes_grupo',{
+    codigo, grupo_num:grpCounter,
+    membros: JSON.stringify(membros.map(m=>({num:m.n,nome:m.nome}))),
+    status:'aguardando'
+  });
+  if(res && res[0]) sessaoId = res[0].id;
+
+  document.getElementById('codigo-display').textContent = codigo;
+  document.getElementById('members-display').textContent = membros.map(m=>m.nome.split(' ')[0]).join(' · ');
+  goScreen('s-scan');
+}
+
+function gerarCodigo(){
+  return Math.floor(100000+Math.random()*900000).toString();
+}
+
+// ── FILE UPLOAD ──────────────────────────────
+function pickFile(idx){ currentSlot=idx; const fi=document.getElementById('file-in'); fi.value=''; fi.click(); }
+
+function gotFile(e){
+  const file=e.target.files[0]; if(!file) return;
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    imgs[currentSlot]=ev.target.result;
+    renderSlot(currentSlot,ev.target.result);
+    checkAnalisarBtn();
+  };
+  reader.readAsDataURL(file);
+}
+
+function renderSlot(idx,b64){
+  const sl=document.getElementById('sl'+idx);
+  sl.classList.add('filled');
+  sl.innerHTML=`<span class="slot-n">${idx+1}</span>
+    <img src="${b64}" alt="">
+    <div class="ov"><span>✓ Tabela Nutricional ${idx+1}</span><span style="font-size:10px;opacity:.8">Toque p/ trocar</span></div>
+    <button class="rm-btn" onclick="rmSlot(event,${idx})">×</button>`;
+}
+
+function rmSlot(e,idx){
+  e.stopPropagation(); imgs[idx]=null;
+  const sl=document.getElementById('sl'+idx);
+  sl.classList.remove('filled');
+  sl.onclick=()=>pickFile(idx);
+  sl.innerHTML=`<span class="slot-n">${idx+1}</span><span class="slot-icon">📋</span><span class="slot-lbl">Tabela Nutricional ${idx+1}<br><small>Toque para foto</small></span>`;
+  checkAnalisarBtn();
+}
+
+function checkAnalisarBtn(){
+  const n=imgs.filter(Boolean).length;
+  const btn=document.getElementById('btn-analisar');
+  btn.disabled=n<4;
+  btn.textContent=n<4?`Leitor de Tabela Nutricional (${n}/4)`:'Leitor de Tabela Nutricional ✓';
+}
+
+// ── ANALISAR ─────────────────────────────────
+async function analisar(){
+  goScreen('s-load');
+  await sbPatch('sessoes_grupo',codigoSessao,{status:'analisando'});
+
+  const blocks = imgs.flatMap((b64,i)=>{
+    const mime=(b64.match(/^data:([^;]+);/)||[])[1]||'image/jpeg';
+    const data=b64.replace(/^data:[^;]+;base64,/,'');
+    return [{type:'text',text:`Imagem ${i+1} – Tabela nutricional:`},
+            {type:'image',source:{type:'base64',media_type:mime,data}}];
+  });
+
+  const sys=`Você é assistente pedagógico de Ciências para 8º ano EF.
+Analise as 4 tabelas nutricionais e retorne APENAS JSON válido sem markdown:
+{
+  "alimentos":[{"numero":1,"nome":"...","emoji":"...","categoria":"...","nutrientes_principais":["..."],"descricao_nutricional":"..."}],
+  "questoes":[{"id":1,"texto":"...","gabarito":"..."}]
+}
+Regras: 4 alimentos, 10 questões dissertativas sobre macronutrientes, micronutrientes, %VD, sódio, gordura trans, fibras, calorias, comparações. Cite os alimentos. Linguagem 8º ano. JSON puro.`;
+
+  try{
+    const r=await fetch('https://api.anthropic.com/v1/messages',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:3000,system:sys,
+        messages:[{role:'user',content:blocks}]})
+    });
+    const d=await r.json();
+    const txt=d.content.filter(b=>b.type==='text').map(b=>b.text).join('');
+    const data=JSON.parse(txt.replace(/```json|```/g,'').trim());
+
+    // Miniaturas compactas (resize para economizar banda)
+    const thumbs = await Promise.all(imgs.map(b64=>resizeImg(b64,200)));
+
+    await sbPatch('sessoes_grupo',codigoSessao,{
+      status:'pronto',
+      alimentos: JSON.stringify(data.alimentos),
+      questoes:  JSON.stringify(data.questoes),
+      imagens_b64: JSON.stringify(thumbs)
+    });
+
+    renderResultado(data);
+    goScreen('s-result');
+    document.getElementById('codigo-result').textContent=codigoSessao;
+    iniciarEscutaNotebooks();
+
+  }catch(err){
+    alert('Erro IA: '+err.message); goScreen('s-scan');
+  }
+}
+
+// Redimensionar imagem para miniatura
+function resizeImg(b64,maxW){
+  return new Promise(res=>{
+    const img=new Image();
+    img.onload=()=>{
+      const ratio=Math.min(1,maxW/img.width);
+      const c=document.createElement('canvas');
+      c.width=img.width*ratio; c.height=img.height*ratio;
+      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
+      res(c.toDataURL('image/jpeg',0.6));
+    };
+    img.src=b64;
+  });
+}
+
+// ── DEMO DATA ────────────────────────────────
+async function demoData(){
+  if(!codigoSessao){ alert('Confirme o grupo primeiro.'); return; }
+  goScreen('s-load');
+  const data={
+    alimentos:[
+      {numero:1,nome:'Biscoito Recheado',emoji:'🍪',categoria:'Ultraprocessado',
+       nutrientes_principais:['Carboidratos','Açúcares','Gorduras','Sódio'],
+       descricao_nutricional:'Rico em carboidratos simples e gorduras. Alto teor de sódio e açúcares adicionados.'},
+      {numero:2,nome:'Iogurte Natural',emoji:'🥛',categoria:'Lácteo',
+       nutrientes_principais:['Proteínas','Cálcio','Gorduras saturadas','Vit. B'],
+       descricao_nutricional:'Boa fonte de proteínas e cálcio. Essencial para ossos e músculos em crescimento.'},
+      {numero:3,nome:'Macarrão Instantâneo',emoji:'🍜',categoria:'Cereal processado',
+       nutrientes_principais:['Carboidratos','Sódio','Gorduras','Ferro'],
+       descricao_nutricional:'Altíssimo teor de sódio — principal alerta. Fornece energia mas pobre em micronutrientes.'},
+      {numero:4,nome:'Suco de Fruta Integral',emoji:'🧃',categoria:'Bebida',
+       nutrientes_principais:['Vitamina C','Açúcares naturais','Carb.','Potássio'],
+       descricao_nutricional:'Fonte de vitamina C antioxidante. Açúcares naturais das frutas sem conservantes.'}
+    ],
+    questoes:[
+      {id:1,texto:'O que são macronutrientes? Identifique dois macronutrientes no biscoito recheado e explique a função de cada no organismo.',gabarito:'Macronutrientes são necessários em grandes quantidades: carboidratos (energia rápida), proteínas (construção celular) e lipídios (reserva energética). O biscoito possui carboidratos e gorduras.'},
+      {id:2,texto:'O que são micronutrientes? Cite dois encontrados nos alimentos analisados e sua importância para adolescentes.',gabarito:'Vitaminas e minerais em pequenas quantidades. Cálcio (iogurte) fortalece ossos; vitamina C (suco) é antioxidante e imunológica.'},
+      {id:3,texto:'Analise o teor de sódio do macarrão instantâneo. Qual o risco do consumo excessivo? Compare com os outros alimentos.',gabarito:'Sódio excessivo causa hipertensão e doenças cardiovasculares. O macarrão ultrapassa 600mg/porção — muito acima dos demais.'},
+      {id:4,texto:'O que significa %VD na tabela nutricional? Se um alimento tem 30%VD de gordura saturada, é alto ou baixo?',gabarito:'%VD = quanto o nutriente representa da necessidade diária (dieta 2000kcal). Acima de 20% é ALTO; 30% de gordura saturada é excessivo.'},
+      {id:5,texto:'Compare proteínas do iogurte e do biscoito. Por que proteínas são fundamentais para adolescentes?',gabarito:'Iogurte tem proteínas de alto valor biológico. Adolescentes precisam para crescimento muscular, hormônios, enzimas e anticorpos.'},
+      {id:6,texto:'Diferencie carboidratos simples e complexos. Identifique um exemplo de cada nos alimentos analisados.',gabarito:'Simples (açúcares): digestão rápida, pico de glicose — biscoito/suco. Complexos (amido): digestão lenta, energia gradual — macarrão.'},
+      {id:7,texto:'Por que a gordura trans é a mais prejudicial? Alguma das tabelas nutricionais analisadas a contém? Explique os riscos.',gabarito:'Eleva LDL e reduz HDL, aumentando risco de AVC e infarto. O biscoito pode conter gordura trans hidrogenada.'},
+      {id:8,texto:'Qual a importância das fibras? Avalie o teor nos 4 alimentos e indique a melhor escolha.',gabarito:'Fibras regulam intestino, saciedade e flora intestinal. Alimentos in natura têm mais fibras que ultraprocessados.'},
+      {id:9,texto:'Explique valor energético e a relação entre excesso calórico e acúmulo de gordura corporal.',gabarito:'Calorias em excesso são armazenadas como lipídios. Ultraprocessados têm alta densidade calórica com baixo valor nutritivo.'},
+      {id:10,texto:'Faça análise comparativa: qual alimento é mais saudável e qual menos? Use 3 critérios nutricionais.',gabarito:'Critérios: sódio, gordura trans, fibras, açúcares adicionados, micronutrientes. Iogurte natural geralmente mais saudável; macarrão instantâneo menos.'}
+    ]
+  };
+  await sbPatch('sessoes_grupo',codigoSessao,{
+    status:'pronto',
+    alimentos:JSON.stringify(data.alimentos),
+    questoes:JSON.stringify(data.questoes),
+    imagens_b64:JSON.stringify([null,null,null,null])
+  });
+  renderResultado(data);
+  goScreen('s-result');
+  document.getElementById('codigo-result').textContent=codigoSessao;
+  iniciarEscutaNotebooks();
+}
+
+// ── RENDER RESULTADO ─────────────────────────
+function renderResultado(data){
+  const pc=['pg','pa','pb','pr'];
+  document.getElementById('food-list').innerHTML=data.alimentos.map(a=>`
+    <div class="food-item">
+      <div class="food-emoji">${a.emoji}</div>
+      <div class="food-info">
+        <div class="food-name">${a.numero}. ${a.nome}</div>
+        <div class="food-cat">${a.categoria}</div>
+        <div class="food-desc">${a.descricao_nutricional}</div>
+        <div class="pills">${a.nutrientes_principais.map((n,i)=>`<span class="pill ${pc[i%4]}">${n}</span>`).join('')}</div>
+      </div>
+    </div>`).join('');
+}
+
+// ── ESCUTA NOTEBOOKS VIA REALTIME ────────────
+function iniciarEscutaNotebooks(){
+  if(!sessaoId) return;
+  // Poll a cada 5s para ver quem conectou
+  setInterval(async()=>{
+    const r=await fetch(`${SB_URL}/rest/v1/respostas_aluno?codigo=eq.${codigoSessao}&select=aluno_nome,aluno_num,respostas`,
+      {headers:HEADERS});
+    const rows=await r.json();
+    if(!Array.isArray(rows)||!rows.length){
+      document.getElementById('nb-list').innerHTML='<p style="font-size:13px;color:var(--muted)">Aguardando conexão dos notebooks…</p>';
+      return;
+    }
+    document.getElementById('nb-list').innerHTML=rows.map(r=>{
+      const resp=typeof r.respostas==='string'?JSON.parse(r.respostas):r.respostas;
+      const n=Object.values(resp).filter(v=>v&&v.trim()).length;
+      return `<div class="nb-item">
+        <span>${r.aluno_num} – ${r.aluno_nome}</span>
+        <span class="nb-prog">${n}/10 respondidas</span>
+      </div>`;
+    }).join('');
+  },5000);
+}
+
+// ── NOVA ATIVIDADE ───────────────────────────
+function novaAtividade(){
+  if(!confirm('Iniciar nova atividade? O código atual será encerrado.')) return;
+  imgs=[null,null,null,null]; sessaoId=null; codigoSessao=null;
+  goScreen('s-grupo');
+}
+
+// ── SUPABASE HELPERS ─────────────────────────
+async function sbPost(table,body){
+  const r=await fetch(`${SB_URL}/rest/v1/${table}`,{
+    method:'POST',
+    headers:{...HEADERS,'Prefer':'return=representation'},
+    body:JSON.stringify(body)
+  });
+  return r.json();
+}
+
+async function sbPatch(table,codigo,body){
+  return fetch(`${SB_URL}/rest/v1/${table}?codigo=eq.${codigo}`,{
+    method:'PATCH',
+    headers:{...HEADERS,'Prefer':'return=minimal'},
+    body:JSON.stringify(body)
+  });
+}
+
+// ── NAV ──────────────────────────────────────
+function goScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+}
+</script>
+</body>
+</html>

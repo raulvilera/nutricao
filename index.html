@@ -2,8 +2,9 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
-<title>Ciências – Celular (Grupo)</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ciências – Notebook (Respostas)</title>
+<link href="https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
   --green:#1a6b3c;--green-l:#e8f5ee;--green-m:#2d9b5a;
@@ -13,549 +14,652 @@
   --gray:#374151;--gray-l:#f3f4f6;
   --border:#d1d5db;--text:#111827;--muted:#6b7280;
   --white:#fff;--r:10px;
+  --shadow:0 1px 3px rgba(0,0,0,.08);
 }
 *{box-sizing:border-box;margin:0;padding:0}
-body{font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;background:#f0fdf4;color:var(--text);font-size:15px;min-height:100vh}
+body{font-family:'Source Sans 3',sans-serif;background:#f9fafb;color:var(--text);font-size:15px}
 
-/* HEADER */
-.hdr{background:var(--green);color:#fff;padding:14px 16px 10px;text-align:center}
-.hdr h1{font-size:15px;font-weight:700;letter-spacing:.04em}
-.hdr p{font-size:12px;opacity:.85;margin-top:2px}
+/* ── HEADER ── */
+.hdr{background:var(--green);color:#fff;padding:14px 20px 10px;border-bottom:3px solid #0f4d28}
+.hdr-inner{max-width:860px;margin:0 auto}
+.school{font-family:'Merriweather',serif;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;opacity:.9;margin-bottom:4px}
+.hdr h1{font-size:15px;font-weight:700}
+.hdr p{font-size:12px;opacity:.8;margin-top:2px}
 
-/* SCREEN */
-.screen{display:none;padding:16px;max-width:480px;margin:0 auto}
+/* ── ACTIVITY TITLE ── */
+.act-title{background:var(--green-l);border-top:2px solid var(--green);border-bottom:2px solid var(--green);padding:12px 20px;text-align:center}
+.act-title h2{font-family:'Merriweather',serif;font-size:13px;font-weight:700;color:var(--green);text-transform:uppercase;letter-spacing:.07em}
+.act-title .bim{font-size:12px;color:var(--muted);margin:2px 0}
+.act-title .temas{font-size:12px;color:var(--gray);margin-top:3px;line-height:1.5}
+.act-title .temas strong{color:var(--green)}
+
+/* ── LAYOUT ── */
+.container{max-width:860px;margin:0 auto;padding:20px 16px 50px}
+
+/* ── SCREENS ── */
+.screen{display:none}
 .screen.active{display:block}
 
-/* CARD */
-.card{background:#fff;border:1px solid var(--border);border-radius:var(--r);padding:14px;margin-bottom:14px;box-shadow:0 1px 3px rgba(0,0,0,.08)}
-.card-title{font-size:13px;font-weight:700;color:var(--green);margin-bottom:10px;display:flex;align-items:center;gap:6px}
+/* ── CARD ── */
+.card{background:var(--white);border:1px solid var(--border);border-radius:var(--r);box-shadow:var(--shadow);margin-bottom:18px;overflow:hidden}
+.card-hdr{background:var(--green);padding:9px 16px;display:flex;align-items:center;gap:8px}
+.card-hdr h3{font-size:13px;font-weight:600;color:#fff;letter-spacing:.03em}
+.step-badge{background:rgba(255,255,255,.25);color:#fff;font-size:11px;font-weight:700;padding:2px 8px;border-radius:12px}
+.card-body{padding:16px}
 
-/* FORM */
-label{font-size:12px;color:var(--muted);display:block;margin-bottom:3px;font-weight:600}
-select,input{width:100%;padding:9px 10px;border:1px solid var(--border);border-radius:8px;font-size:14px;background:#fff;color:var(--text);margin-bottom:10px;font-family:inherit}
-select:focus,input:focus{outline:none;border-color:var(--green)}
+/* ── CODE INPUT ── */
+.code-input-wrap{display:flex;gap:10px;align-items:flex-end;flex-wrap:wrap}
+.code-input{font-size:32px;font-weight:900;letter-spacing:.2em;text-align:center;border:2px solid var(--border);border-radius:var(--r);padding:10px 14px;width:200px;font-family:'Source Sans 3',sans-serif;color:var(--green)}
+.code-input:focus{outline:none;border-color:var(--green)}
 
-/* MEMBER ROWS */
-.mrow{display:grid;grid-template-columns:22px 1fr 46px;gap:6px;align-items:center;margin-bottom:6px;transition:max-height .3s,opacity .3s,margin .3s;max-height:48px;overflow:hidden}
+/* ── MEMBER SELECT ── */
+.mrow{display:grid;grid-template-columns:22px 1fr 52px;gap:8px;align-items:center;margin-bottom:8px;transition:max-height .3s,opacity .3s,margin .3s;max-height:50px;overflow:hidden}
 .mrow.gone{max-height:0;opacity:0;margin:0;pointer-events:none}
 .midx{font-size:13px;font-weight:600;color:var(--muted);text-align:right}
-.msel{margin-bottom:0}
-.mnum{font-size:13px;font-weight:700;color:var(--green);text-align:center;border-bottom:1.5px solid var(--green);padding:2px 0}
+select,input[type=text]{width:100%;padding:8px 10px;border:1px solid var(--border);border-radius:8px;font-size:13px;background:var(--white);color:var(--text);font-family:'Source Sans 3',sans-serif}
+select:focus,input[type=text]:focus{outline:none;border-color:var(--green)}
+.mnum{font-size:13px;font-weight:700;color:var(--green);text-align:center;border-bottom:1.5px solid var(--green);padding:3px 4px}
 
-/* BUTTONS */
-.btn{width:100%;padding:12px;border:none;border-radius:var(--r);font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;display:flex;align-items:center;justify-content:center;gap:8px;transition:all .18s}
+/* ── BUTTONS ── */
+.btn{display:inline-flex;align-items:center;gap:7px;padding:10px 20px;border-radius:var(--r);font-size:14px;font-weight:600;cursor:pointer;border:none;font-family:'Source Sans 3',sans-serif;transition:all .18s}
 .btn-green{background:var(--green);color:#fff}
 .btn-green:hover{background:var(--green-m)}
 .btn-green:disabled{background:#9ca3af;cursor:default}
-.btn-outline{background:#fff;color:var(--green);border:1.5px solid var(--green)}
-.btn-sm{padding:8px 14px;font-size:13px;width:auto}
+.btn-outline{background:var(--white);color:var(--green);border:1.5px solid var(--green)}
+.btn-outline:hover{background:var(--green-l)}
+.btn-full{width:100%;justify-content:center}
+.btn-sm{padding:6px 14px;font-size:13px}
 .btn-amber{background:#d97706;color:#fff}
+.btn-amber:hover{background:var(--amber)}
 
-/* SCAN SLOTS */
-.scan-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:12px}
-.slot{border:2px dashed var(--border);border-radius:var(--r);min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;cursor:pointer;position:relative;overflow:hidden;background:var(--gray-l);transition:border-color .2s}
-.slot:hover,.slot:active{border-color:var(--green-m);background:var(--green-l)}
-.slot.filled{border-style:solid;border-color:var(--green-m)}
-.slot img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.slot .ov{position:absolute;inset:0;background:rgba(0,0,0,.4);display:flex;flex-direction:column;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:600;gap:4px}
-.slot-n{position:absolute;top:5px;left:6px;background:var(--green);color:#fff;font-size:10px;font-weight:700;padding:1px 7px;border-radius:10px;z-index:2}
-.slot-icon{font-size:26px;margin-bottom:4px}
-.slot-lbl{font-size:11px;font-weight:600;color:var(--muted);text-align:center;line-height:1.3}
-.rm-btn{position:absolute;top:5px;right:6px;background:rgba(185,28,28,.85);color:#fff;border:none;border-radius:50%;width:22px;height:22px;font-size:13px;cursor:pointer;z-index:3;display:flex;align-items:center;justify-content:center;line-height:1}
+/* ── ALERT ── */
+.alert{padding:10px 13px;border-radius:8px;font-size:13px;margin-bottom:12px;line-height:1.5}
+.ai{background:var(--blue-l);color:var(--blue);border-left:3px solid var(--blue)}
+.as{background:var(--green-l);color:var(--green);border-left:3px solid var(--green)}
+.aw{background:var(--amber-l);color:var(--amber);border-left:3px solid #d97706}
+.ae{background:var(--red-l);color:var(--red);border-left:3px solid var(--red)}
 
-/* STATUS BADGES */
-.badge{display:inline-flex;align-items:center;gap:5px;padding:4px 12px;border-radius:20px;font-size:12px;font-weight:700}
-.badge-green{background:var(--green-l);color:var(--green)}
-.badge-amber{background:var(--amber-l);color:var(--amber)}
-.badge-blue{background:var(--blue-l);color:var(--blue)}
+/* ── LOADER ── */
+.spin-wrap{text-align:center;padding:28px 16px}
+.spin{width:36px;height:36px;border:3px solid var(--green-l);border-top-color:var(--green);border-radius:50%;animation:sp .8s linear infinite;margin:0 auto 10px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.spin-txt{font-size:13px;color:var(--muted)}
 
-/* SESSION CODE */
-.code-box{background:var(--green);color:#fff;border-radius:var(--r);padding:20px;text-align:center;margin-bottom:14px}
-.code-box .code{font-size:48px;font-weight:900;letter-spacing:.2em;line-height:1}
-.code-box .lbl{font-size:12px;opacity:.8;margin-top:6px}
+/* ── GROUP INFO BAR ── */
+.grp-bar{background:var(--green);color:#fff;padding:8px 16px;display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;font-size:13px}
+.grp-bar .grp-num{font-weight:700;font-size:14px}
+.grp-bar .grp-code{opacity:.8;font-size:12px}
+.grp-bar .grp-aluno{background:rgba(255,255,255,.2);padding:2px 10px;border-radius:12px;font-size:12px;font-weight:600}
 
-/* FOOD RESULTS */
-.food-item{display:flex;align-items:flex-start;gap:10px;padding:10px 0;border-bottom:1px solid var(--border)}
-.food-item:last-child{border-bottom:none}
-.food-emoji{font-size:28px;flex-shrink:0;width:40px;text-align:center}
-.food-info{}
-.food-name{font-size:13px;font-weight:700;color:var(--green)}
-.food-cat{font-size:11px;color:var(--muted);margin-bottom:3px}
-.food-desc{font-size:12px;color:var(--gray);line-height:1.4}
-.pills{display:flex;flex-wrap:wrap;gap:3px;margin-top:4px}
+/* ── FOOD CARDS ── */
+.food-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-bottom:4px}
+@media(max-width:500px){.food-grid{grid-template-columns:1fr}}
+.food-card{border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.food-card-top{height:90px;background:var(--green-l);display:flex;align-items:center;justify-content:center;font-size:36px;position:relative}
+.food-card-top img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.food-card-body{padding:8px 10px}
+.food-card-name{font-size:12px;font-weight:700;color:var(--green);margin-bottom:2px}
+.food-card-cat{font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:600;margin-bottom:4px}
+.food-card-desc{font-size:11px;color:var(--gray);line-height:1.4}
+.pills{display:flex;flex-wrap:wrap;gap:3px;margin-top:5px}
 .pill{font-size:10px;font-weight:600;padding:1px 7px;border-radius:10px}
 .pg{background:var(--green-l);color:var(--green)}
 .pa{background:var(--amber-l);color:var(--amber)}
 .pb{background:var(--blue-l);color:var(--blue)}
 .pr{background:var(--red-l);color:var(--red)}
 
-/* LOADER */
-.loader{text-align:center;padding:30px 16px;display:none}
-.loader.on{display:block}
-.spin{width:38px;height:38px;border:3px solid var(--green-l);border-top-color:var(--green);border-radius:50%;animation:sp .8s linear infinite;margin:0 auto 12px}
-@keyframes sp{to{transform:rotate(360deg)}}
-.loader p{font-size:13px;color:var(--muted)}
+/* ── QUESTIONS ── */
+.q-list{counter-reset:qc}
+.q-item{counter-increment:qc;border:1px solid var(--border);border-radius:var(--r);padding:14px 16px;margin-bottom:12px;background:var(--white);position:relative}
+.q-item::before{content:counter(qc);position:absolute;top:-1px;left:-1px;background:var(--green);color:#fff;font-size:12px;font-weight:700;width:26px;height:26px;display:flex;align-items:center;justify-content:center;border-radius:var(--r) 0 var(--r) 0}
+.q-text{font-size:13px;color:var(--text);padding-left:30px;line-height:1.65;margin-bottom:10px}
+.q-answer{width:100%;min-height:64px;border:1px solid var(--border);border-radius:7px;padding:8px 10px;font-size:13px;font-family:'Source Sans 3',sans-serif;resize:vertical;color:var(--text);background:#fafafa;transition:border-color .2s}
+.q-answer:focus{outline:none;border-color:var(--green);background:var(--white)}
+.q-answer.saved{border-color:var(--green-m);background:var(--green-l)}
+.q-saved-lbl{font-size:11px;color:var(--green-m);margin-top:3px;display:none}
+.q-saved-lbl.show{display:block}
 
-/* ALERT */
-.alert{padding:10px 12px;border-radius:8px;font-size:13px;margin-bottom:12px;line-height:1.5}
-.ai{background:var(--blue-l);color:var(--blue);border-left:3px solid var(--blue)}
-.as{background:var(--green-l);color:var(--green);border-left:3px solid var(--green)}
-.aw{background:var(--amber-l);color:var(--amber);border-left:3px solid #d97706}
+/* ── PROGRESS BAR ── */
+.prog-bar-wrap{margin-bottom:16px}
+.prog-lbl{font-size:12px;color:var(--muted);margin-bottom:4px;display:flex;justify-content:space-between}
+.prog-bar{height:5px;background:var(--gray-l);border-radius:3px}
+.prog-fill{height:5px;background:var(--green);border-radius:3px;transition:width .4s}
 
-/* TIMER */
-.timer-row{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
-.timer{font-size:13px;font-weight:600;color:var(--muted);font-variant-numeric:tabular-nums}
+/* ── SAVE BTN ROW ── */
+.save-row{display:flex;gap:10px;flex-wrap:wrap;margin-top:4px}
 
-/* META */
-.meta{font-size:12px;color:var(--muted);display:flex;gap:12px;flex-wrap:wrap;margin-top:6px}
-.meta strong{color:var(--green)}
+/* ── META ── */
+.meta-row{display:flex;gap:14px;flex-wrap:wrap;font-size:13px;color:var(--gray);margin-top:8px}
+.meta-row strong{color:var(--green)}
 
-/* QR / SHARE */
-.share-area{background:var(--gray-l);border-radius:var(--r);padding:14px;text-align:center;margin-bottom:12px}
-.share-area p{font-size:13px;color:var(--muted);margin-bottom:8px}
-
-/* NOTEBOOK STATUS */
-.nb-list{margin-top:8px}
-.nb-item{display:flex;align-items:center;justify-content:space-between;padding:7px 0;border-bottom:1px solid var(--border);font-size:13px}
-.nb-item:last-child{border-bottom:none}
-.nb-prog{font-size:11px;color:var(--muted)}
+/* ── PRINT ── */
+@media print{
+  .no-print{display:none!important}
+  .screen{display:block!important}
+  #s-connect,#s-load{display:none!important}
+  body{background:#fff}
+  .card{box-shadow:none;border:1px solid #ccc}
+  .q-answer{background:#fff;border:1px solid #aaa;min-height:54px}
+  .hdr,.act-title{print-color-adjust:exact;-webkit-print-color-adjust:exact}
+}
 </style>
 </head>
 <body>
 
+<!-- HEADER -->
 <div class="hdr">
-  <h1>📱 Ciências — Tabelas Nutricionais</h1>
-  <p>E.E. Prof.ª Wanda Mascagni de Sá · 8º Ano A</p>
-</div>
-
-<!-- ── TELA 1: GRUPO ── -->
-<div class="screen active" id="s-grupo">
-  <div class="card">
-    <div class="card-title">👥 Dados do grupo</div>
-    <div class="timer-row">
-      <span style="font-size:12px;color:var(--muted)">Grupo:</span>
-      <span class="badge badge-green" id="grp-badge">Grupo ___</span>
-      <span class="timer" id="timer-lbl">⏱ 0:00</span>
-    </div>
-
-    <!-- 5 member rows -->
-    <div id="mrows">
-      <div class="mrow" id="mr0"><span class="midx">1.</span><select class="msel" id="ms0" onchange="onSel(0)"></select><div class="mnum" id="mn0">___</div></div>
-      <div class="mrow" id="mr1"><span class="midx">2.</span><select class="msel" id="ms1" onchange="onSel(1)"></select><div class="mnum" id="mn1">___</div></div>
-      <div class="mrow gone" id="mr2"><span class="midx">3.</span><select class="msel" id="ms2" onchange="onSel(2)"></select><div class="mnum" id="mn2">___</div></div>
-      <div class="mrow gone" id="mr3"><span class="midx">4.</span><select class="msel" id="ms3" onchange="onSel(3)"></select><div class="mnum" id="mn3">___</div></div>
-      <div class="mrow gone" id="mr4"><span class="midx">5.</span><select class="msel" id="ms4" onchange="onSel(4)"></select><div class="mnum" id="mn4">___</div></div>
-    </div>
-    <div class="meta">
-      <span>Série: <strong>8º Ano</strong></span>
-      <span>Turma: <strong>8ºA</strong></span>
-      <span>Data: <strong id="today"></strong></span>
-    </div>
-  </div>
-  <button class="btn btn-green" id="btn-conf" onclick="confirmarGrupo()" disabled>✓ Confirmar grupo</button>
-</div>
-
-<!-- ── TELA 2: SCAN ── -->
-<div class="screen" id="s-scan">
-  <div class="code-box">
-    <div class="lbl">Código do grupo — diga aos colegas</div>
-    <div class="code" id="codigo-display">------</div>
-    <div class="lbl" id="members-display"></div>
-  </div>
-  <div class="alert ai">📌 Use este celular para fotografar as 4 tabelas nutricionais. Os colegas abrem o <strong>notebook.html</strong> e digitam o código acima.</div>
-  <div class="card">
-    <div class="card-title">📋 Fotografar as 4 Tabelas Nutricionais</div>
-    <div class="scan-grid" id="scan-grid">
-      <div class="slot" id="sl0" onclick="pickFile(0)"><span class="slot-n">1</span><span class="slot-icon">📋</span><span class="slot-lbl">Tabela Nutricional 1<br><small>Toque para foto</small></span></div>
-      <div class="slot" id="sl1" onclick="pickFile(1)"><span class="slot-n">2</span><span class="slot-icon">📋</span><span class="slot-lbl">Tabela Nutricional 2<br><small>Toque para foto</small></span></div>
-      <div class="slot" id="sl2" onclick="pickFile(2)"><span class="slot-n">3</span><span class="slot-icon">📋</span><span class="slot-lbl">Tabela Nutricional 3<br><small>Toque para foto</small></span></div>
-      <div class="slot" id="sl3" onclick="pickFile(3)"><span class="slot-n">4</span><span class="slot-icon">📋</span><span class="slot-lbl">Tabela Nutricional 4<br><small>Toque para foto</small></span></div>
-    </div>
-    <input type="file" id="file-in" accept="image/*" capture="environment" style="display:none" onchange="gotFile(event)">
-    <div style="display:flex;gap:8px;flex-wrap:wrap">
-      <button class="btn btn-green" id="btn-analisar" onclick="analisar()" disabled>Leitor de Tabela Nutricional</button>
-      <button class="btn btn-outline btn-sm" onclick="demoData()">📦 Exemplo</button>
-    </div>
+  <div class="hdr-inner">
+    <div class="school">E.E. Prof.ª Wanda Mascagni de Sá</div>
+    <h1>💻 Atividade de Ciências — Tabelas Nutricionais</h1>
+    <p>8º Ano A · 2º Bimestre</p>
   </div>
 </div>
 
-<!-- ── TELA 3: LOADER ── -->
-<div class="screen" id="s-load">
-  <div class="loader on">
-    <div class="spin"></div>
-    <p id="load-txt">Lendo as tabelas nutricionais com IA…</p>
-    <p style="font-size:12px;color:var(--muted);margin-top:6px">Os notebooks serão atualizados automaticamente</p>
-  </div>
+<!-- ACTIVITY TITLE -->
+<div class="act-title">
+  <h2>Atividade de Ciências</h2>
+  <div class="bim">(2º Bimestre)</div>
+  <div class="temas">Temas: <strong>"Macronutrientes, Micronutrientes"</strong> — Leitura e análise da tabela nutricional dos alimentos.</div>
 </div>
 
-<!-- ── TELA 4: RESULTADO ── -->
-<div class="screen" id="s-result">
-  <div class="code-box" style="padding:12px 16px">
-    <div class="lbl">Código do grupo</div>
-    <div class="code" style="font-size:36px" id="codigo-result">------</div>
-  </div>
-  <div class="alert as">✅ Análise concluída! Os notebooks já receberam as questões automaticamente.</div>
-  <div class="card">
-    <div class="card-title">🍽️ Alimentos identificados</div>
-    <div id="food-list"></div>
-  </div>
-  <div class="card">
-    <div class="card-title">💻 Notebooks conectados</div>
-    <div class="nb-list" id="nb-list">
-      <p style="font-size:13px;color:var(--muted)">Aguardando conexão dos notebooks…</p>
+<div class="container">
+
+  <!-- ══ TELA 1: CONECTAR ══ -->
+  <div class="screen active" id="s-connect">
+    <div class="card">
+      <div class="card-hdr"><span class="step-badge">PASSO 1</span><h3>🔑 Código do grupo</h3></div>
+      <div class="card-body">
+        <div class="alert ai">Digite o código de 6 dígitos que aparece no <strong>celular do grupo</strong>.</div>
+        <label style="font-size:12px;color:var(--muted);display:block;margin-bottom:6px;font-weight:600">Código:</label>
+        <div class="code-input-wrap">
+          <input type="text" class="code-input" id="codigo-input" maxlength="6" placeholder="000000"
+            oninput="this.value=this.value.replace(/\D/g,''); checkCodeBtn()"
+            onkeydown="if(event.key==='Enter') buscarSessao()">
+          <button class="btn btn-green" id="btn-buscar" onclick="buscarSessao()" disabled>Entrar →</button>
+        </div>
+        <div id="code-error" style="display:none;margin-top:8px"></div>
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-hdr"><span class="step-badge">PASSO 2</span><h3>👤 Identificação do aluno</h3></div>
+      <div class="card-body">
+        <div class="alert ai" id="alert-membros">Digite o código primeiro para ver os membros do grupo.</div>
+        <div id="mrows-nb">
+          <!-- preenchido dinamicamente após buscar sessão -->
+        </div>
+        <div class="meta-row">
+          <span>Série: <strong>8º Ano</strong></span>
+          <span>Turma: <strong>8ºA</strong></span>
+          <span>Data: <strong id="today-nb"></strong></span>
+        </div>
+        <div style="margin-top:14px">
+          <button class="btn btn-green btn-full" id="btn-iniciar" onclick="iniciarAtividade()" disabled>
+            ✓ Confirmar e ver atividade
+          </button>
+        </div>
+      </div>
     </div>
   </div>
-  <button class="btn btn-outline" onclick="novaAtividade()" style="margin-top:4px">🔄 Nova atividade</button>
-</div>
+
+  <!-- ══ TELA 2: LOADING ══ -->
+  <div class="screen" id="s-load">
+    <div class="card">
+      <div class="card-body">
+        <div class="spin-wrap">
+          <div class="spin"></div>
+          <p class="spin-txt" id="load-txt">Buscando sessão…</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ══ TELA 3: ATIVIDADE ══ -->
+  <div class="screen" id="s-ativ">
+
+    <!-- GROUP INFO BAR -->
+    <div class="grp-bar no-print" id="grp-bar">
+      <div>
+        <span class="grp-num" id="grp-num-disp"></span>
+        <span class="grp-code" id="grp-code-disp"></span>
+      </div>
+      <span class="grp-aluno" id="grp-aluno-disp"></span>
+    </div>
+
+    <!-- Alimentos identificados -->
+    <div class="card">
+      <div class="card-hdr"><h3>🍽️ Alimentos identificados pelo grupo</h3></div>
+      <div class="card-body">
+        <div class="food-grid" id="food-grid"></div>
+      </div>
+    </div>
+
+    <!-- Questões -->
+    <div class="card">
+      <div class="card-hdr"><span class="step-badge">RESPONDA</span><h3>📝 Questões</h3></div>
+      <div class="card-body">
+        <div class="alert as" id="alert-ativ">Responda individualmente. Suas respostas são salvas automaticamente.</div>
+
+        <div class="prog-bar-wrap no-print">
+          <div class="prog-lbl">
+            <span>Progresso</span>
+            <span id="prog-txt">0 / 10</span>
+          </div>
+          <div class="prog-bar"><div class="prog-fill" id="prog-fill" style="width:0%"></div></div>
+        </div>
+
+        <div class="q-list" id="q-list"></div>
+
+        <div class="save-row no-print">
+          <button class="btn btn-green" id="btn-salvar" onclick="salvarTudo()">💾 Salvar respostas</button>
+          <button class="btn btn-amber" onclick="toggleGabarito()">🔑 Gabarito (professor)</button>
+          <button class="btn btn-outline btn-sm" onclick="window.print()">🖨️ Imprimir</button>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /s-ativ -->
+
+</div><!-- /container -->
 
 <script>
-// ── CONFIG SUPABASE ──────────────────────────
+// ── CONFIG ───────────────────────────────────
 const SB_URL  = 'https://nifnghwqrdvzovwzcqwp.supabase.co';
 const SB_KEY  = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5pZm5naHdxcmR2em92d3pjcXdwIiwicm9sZSI6ImFub24iLCJpYXQiOjE3Nzg2NzI1ODAsImV4cCI6MjA5NDI0ODU4MH0.ozRD7uKnBRN1zliflZ8tVM68geslkDaqZobWMYFZJz4';
-const HEADERS = {'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY};
+const HDR     = {'Content-Type':'application/json','apikey':SB_KEY,'Authorization':'Bearer '+SB_KEY};
 
-// ── ALUNOS ───────────────────────────────────
-const ALUNOS = [
-  {n:1,nome:'Alice Cardoso de Alcantara'},
-  {n:3,nome:'Ana Luiza Valença Paiva'},
-  {n:5,nome:'Bryan Diniz Silva'},
-  {n:6,nome:'Carlos Eduardo Menezes Machado'},
-  {n:7,nome:'Evandro Cutolo Teixeira'},
-  {n:9,nome:'Gabriela Santos Costa'},
-  {n:11,nome:'Guilherme Carmo Rodrigues'},
-  {n:12,nome:'Gustavo Henrique da Silva'},
-  {n:13,nome:'Isaac Fernandes de Andrade'},
-  {n:15,nome:'Kelvin Duarte Gonçalves'},
-  {n:16,nome:'Laura Vitória Rocha'},
-  {n:18,nome:'Letícia Custódio Lima'},
-  {n:19,nome:'Lucas Eduardo da Silva Santana'},
-  {n:20,nome:'Matheus Kauã dos Santos Nascimento'},
-  {n:21,nome:'Mayara Caetano de Oliveira Pina'},
-  {n:22,nome:'Miguel Lima de Mesquita'},
-  {n:24,nome:'Nicolas Rocha Silva'},
-  {n:25,nome:'Paolla Michelline dos Santos Marques'},
-  {n:27,nome:'Pedro Henrique Corrêa de Brito'},
-  {n:28,nome:'Pedro Leonardo de Andrade Marques'},
-  {n:29,nome:'Rafael Henrique Siqueira Bernardes Zia'},
-  {n:30,nome:'Raphael Mathias Nunes Miranda'},
-  {n:33,nome:'Ryan Gabriel Pereira de Sousa'},
-  {n:34,nome:'Samuel Alves da Costa'},
-  {n:35,nome:'Sofia Azeredo Cubas'},
-  {n:36,nome:'Sophia Lacerda Andrade'},
-  {n:37,nome:'Thaylla Duanny Venâncio Scaquito'},
-  {n:38,nome:'Thays Rodrigues da Silva'},
-  {n:39,nome:'Victor Henrique Benvindo'},
-  {n:40,nome:'Manoella dos Anjos Santos'},
-  {n:41,nome:'Mariana Charrua Gaia Mion Silva'}
-];
+// ⚠️ COLE AQUI A URL DO APPS SCRIPT APÓS IMPLANTAR
+// Ex: https://script.google.com/macros/s/AKfy.../exec
+const APPS_SCRIPT_URL = 'COLE_AQUI_A_URL_DO_APPS_SCRIPT';
 
 // ── STATE ────────────────────────────────────
-let grpCounter = parseInt(localStorage.getItem('wanda_grp')||'0');
-let timerInt = null, timerSec = 0, timerOn = false;
-let currentSlot = null;
-let imgs = [null,null,null,null];
-let sessaoId = null, codigoSessao = null;
-let realtimeChan = null;
+let sessao      = null;   // objeto sessão completo
+let alunoSel    = null;   // {num, nome}
+let respostaId  = null;   // UUID da linha em respostas_aluno
+let gabOn       = false;
+let autoSaveInt = null;
 
 // ── INIT ─────────────────────────────────────
-(function(){
-  document.getElementById('today').textContent = new Date().toLocaleDateString('pt-BR');
-  document.getElementById('grp-badge').textContent = 'Grupo '+(grpCounter+1);
-  const opts = '<option value="">— Selecionar —</option>'+ALUNOS.map(a=>`<option value="${a.n}">${a.nome}</option>`).join('');
-  for(let i=0;i<5;i++) document.getElementById('ms'+i).innerHTML = opts;
-})();
+document.getElementById('today-nb').textContent = new Date().toLocaleDateString('pt-BR');
 
-// ── TIMER ────────────────────────────────────
-function startTimer(){
-  if(timerOn) return; timerOn=true;
-  timerInt = setInterval(()=>{
-    timerSec++;
-    const m=Math.floor(timerSec/60), s=timerSec%60;
-    document.getElementById('timer-lbl').textContent='⏱ '+m+':'+(s<10?'0':'')+s;
-  },1000);
-}
-function stopTimer(){ clearInterval(timerInt); }
-
-// ── MEMBER SELECTS ───────────────────────────
-function getChosen(){ return [0,1,2,3,4].map(i=>parseInt(document.getElementById('ms'+i).value)||null); }
-
-function onSel(idx){
-  startTimer();
-  const v = parseInt(document.getElementById('ms'+idx).value)||null;
-  document.getElementById('mn'+idx).textContent = v ? 'N°'+v : '___';
-  rebuildOpts();
-  revealSlots();
-  checkConfBtn();
+// ── CÓDIGO INPUT ─────────────────────────────
+function checkCodeBtn(){
+  const v = document.getElementById('codigo-input').value;
+  document.getElementById('btn-buscar').disabled = v.length !== 6;
 }
 
-function rebuildOpts(){
-  const chosen = getChosen();
-  for(let i=0;i<5;i++){
-    const sel=document.getElementById('ms'+i);
-    const cur=sel.value;
-    const others=chosen.filter((_,j)=>j!==i);
-    sel.innerHTML='<option value="">— Selecionar —</option>'+
-      ALUNOS.map(a=>`<option value="${a.n}" ${others.includes(a.n)?'disabled style="color:#9ca3af"':''}>${a.nome}</option>`).join('');
-    sel.value=cur;
-  }
-}
+// ── BUSCAR SESSÃO ─────────────────────────────
+async function buscarSessao(){
+  const codigo = document.getElementById('codigo-input').value.trim();
+  if(codigo.length !== 6){ showCodeError('Digite exatamente 6 dígitos.'); return; }
 
-function revealSlots(){
-  const chosen=getChosen();
-  let last=-1;
-  for(let i=4;i>=0;i--) if(chosen[i]){last=i;break;}
-  const showTo=Math.min(4,Math.max(1,last+1));
-  for(let i=0;i<5;i++) document.getElementById('mr'+i).classList.toggle('gone',i>showTo);
-}
-
-function checkConfBtn(){
-  const any=getChosen().some(Boolean);
-  document.getElementById('btn-conf').disabled=!any;
-}
-
-// ── CONFIRMAR GRUPO ──────────────────────────
-async function confirmarGrupo(){
-  stopTimer();
-  grpCounter++;
-  localStorage.setItem('wanda_grp',grpCounter);
-
-  const membros = getChosen().filter(Boolean).map(n=>ALUNOS.find(a=>a.n===n));
-  const codigo = gerarCodigo();
-  codigoSessao = codigo;
-
-  // Inserir sessão no Supabase
-  const res = await sbPost('sessoes_grupo',{
-    codigo, grupo_num:grpCounter,
-    membros: JSON.stringify(membros.map(m=>({num:m.n,nome:m.nome}))),
-    status:'aguardando'
-  });
-  if(res && res[0]) sessaoId = res[0].id;
-
-  document.getElementById('codigo-display').textContent = codigo;
-  document.getElementById('members-display').textContent = membros.map(m=>m.nome.split(' ')[0]).join(' · ');
-  goScreen('s-scan');
-}
-
-function gerarCodigo(){
-  return Math.floor(100000+Math.random()*900000).toString();
-}
-
-// ── FILE UPLOAD ──────────────────────────────
-function pickFile(idx){ currentSlot=idx; const fi=document.getElementById('file-in'); fi.value=''; fi.click(); }
-
-function gotFile(e){
-  const file=e.target.files[0]; if(!file) return;
-  const reader=new FileReader();
-  reader.onload=ev=>{
-    imgs[currentSlot]=ev.target.result;
-    renderSlot(currentSlot,ev.target.result);
-    checkAnalisarBtn();
-  };
-  reader.readAsDataURL(file);
-}
-
-function renderSlot(idx,b64){
-  const sl=document.getElementById('sl'+idx);
-  sl.classList.add('filled');
-  sl.innerHTML=`<span class="slot-n">${idx+1}</span>
-    <img src="${b64}" alt="">
-    <div class="ov"><span>✓ Tabela Nutricional ${idx+1}</span><span style="font-size:10px;opacity:.8">Toque p/ trocar</span></div>
-    <button class="rm-btn" onclick="rmSlot(event,${idx})">×</button>`;
-}
-
-function rmSlot(e,idx){
-  e.stopPropagation(); imgs[idx]=null;
-  const sl=document.getElementById('sl'+idx);
-  sl.classList.remove('filled');
-  sl.onclick=()=>pickFile(idx);
-  sl.innerHTML=`<span class="slot-n">${idx+1}</span><span class="slot-icon">📋</span><span class="slot-lbl">Tabela Nutricional ${idx+1}<br><small>Toque para foto</small></span>`;
-  checkAnalisarBtn();
-}
-
-function checkAnalisarBtn(){
-  const n=imgs.filter(Boolean).length;
-  const btn=document.getElementById('btn-analisar');
-  btn.disabled=n<4;
-  btn.textContent=n<4?`Leitor de Tabela Nutricional (${n}/4)`:'Leitor de Tabela Nutricional ✓';
-}
-
-// ── ANALISAR ─────────────────────────────────
-async function analisar(){
-  goScreen('s-load');
-  await sbPatch('sessoes_grupo',codigoSessao,{status:'analisando'});
-
-  const blocks = imgs.flatMap((b64,i)=>{
-    const mime=(b64.match(/^data:([^;]+);/)||[])[1]||'image/jpeg';
-    const data=b64.replace(/^data:[^;]+;base64,/,'');
-    return [{type:'text',text:`Imagem ${i+1} – Tabela nutricional:`},
-            {type:'image',source:{type:'base64',media_type:mime,data}}];
-  });
-
-  const sys=`Você é assistente pedagógico de Ciências para 8º ano EF.
-Analise as 4 tabelas nutricionais e retorne APENAS JSON válido sem markdown:
-{
-  "alimentos":[{"numero":1,"nome":"...","emoji":"...","categoria":"...","nutrientes_principais":["..."],"descricao_nutricional":"..."}],
-  "questoes":[{"id":1,"texto":"...","gabarito":"..."}]
-}
-Regras: 4 alimentos, 10 questões dissertativas sobre macronutrientes, micronutrientes, %VD, sódio, gordura trans, fibras, calorias, comparações. Cite os alimentos. Linguagem 8º ano. JSON puro.`;
-
+  setLoad(true, 'Buscando grupo…');
   try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{
-      method:'POST',
-      headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:3000,system:sys,
-        messages:[{role:'user',content:blocks}]})
-    });
-    const d=await r.json();
-    const txt=d.content.filter(b=>b.type==='text').map(b=>b.text).join('');
-    const data=JSON.parse(txt.replace(/```json|```/g,'').trim());
+    const r = await fetch(`${SB_URL}/rest/v1/sessoes_grupo?codigo=eq.${codigo}&select=*`, {headers: HDR});
+    const rows = await r.json();
 
-    // Miniaturas compactas (resize para economizar banda)
-    const thumbs = await Promise.all(imgs.map(b64=>resizeImg(b64,200)));
+    if(!rows || !rows.length){ setLoad(false); showCodeError('❌ Código não encontrado. Verifique com o grupo.'); return; }
 
-    await sbPatch('sessoes_grupo',codigoSessao,{
-      status:'pronto',
-      alimentos: JSON.stringify(data.alimentos),
-      questoes:  JSON.stringify(data.questoes),
-      imagens_b64: JSON.stringify(thumbs)
-    });
-
-    renderResultado(data);
-    goScreen('s-result');
-    document.getElementById('codigo-result').textContent=codigoSessao;
-    iniciarEscutaNotebooks();
-
-  }catch(err){
-    alert('Erro IA: '+err.message); goScreen('s-scan');
-  }
-}
-
-// Redimensionar imagem para miniatura
-function resizeImg(b64,maxW){
-  return new Promise(res=>{
-    const img=new Image();
-    img.onload=()=>{
-      const ratio=Math.min(1,maxW/img.width);
-      const c=document.createElement('canvas');
-      c.width=img.width*ratio; c.height=img.height*ratio;
-      c.getContext('2d').drawImage(img,0,0,c.width,c.height);
-      res(c.toDataURL('image/jpeg',0.6));
-    };
-    img.src=b64;
-  });
-}
-
-// ── DEMO DATA ────────────────────────────────
-async function demoData(){
-  if(!codigoSessao){ alert('Confirme o grupo primeiro.'); return; }
-  goScreen('s-load');
-  const data={
-    alimentos:[
-      {numero:1,nome:'Biscoito Recheado',emoji:'🍪',categoria:'Ultraprocessado',
-       nutrientes_principais:['Carboidratos','Açúcares','Gorduras','Sódio'],
-       descricao_nutricional:'Rico em carboidratos simples e gorduras. Alto teor de sódio e açúcares adicionados.'},
-      {numero:2,nome:'Iogurte Natural',emoji:'🥛',categoria:'Lácteo',
-       nutrientes_principais:['Proteínas','Cálcio','Gorduras saturadas','Vit. B'],
-       descricao_nutricional:'Boa fonte de proteínas e cálcio. Essencial para ossos e músculos em crescimento.'},
-      {numero:3,nome:'Macarrão Instantâneo',emoji:'🍜',categoria:'Cereal processado',
-       nutrientes_principais:['Carboidratos','Sódio','Gorduras','Ferro'],
-       descricao_nutricional:'Altíssimo teor de sódio — principal alerta. Fornece energia mas pobre em micronutrientes.'},
-      {numero:4,nome:'Suco de Fruta Integral',emoji:'🧃',categoria:'Bebida',
-       nutrientes_principais:['Vitamina C','Açúcares naturais','Carb.','Potássio'],
-       descricao_nutricional:'Fonte de vitamina C antioxidante. Açúcares naturais das frutas sem conservantes.'}
-    ],
-    questoes:[
-      {id:1,texto:'O que são macronutrientes? Identifique dois macronutrientes no biscoito recheado e explique a função de cada no organismo.',gabarito:'Macronutrientes são necessários em grandes quantidades: carboidratos (energia rápida), proteínas (construção celular) e lipídios (reserva energética). O biscoito possui carboidratos e gorduras.'},
-      {id:2,texto:'O que são micronutrientes? Cite dois encontrados nos alimentos analisados e sua importância para adolescentes.',gabarito:'Vitaminas e minerais em pequenas quantidades. Cálcio (iogurte) fortalece ossos; vitamina C (suco) é antioxidante e imunológica.'},
-      {id:3,texto:'Analise o teor de sódio do macarrão instantâneo. Qual o risco do consumo excessivo? Compare com os outros alimentos.',gabarito:'Sódio excessivo causa hipertensão e doenças cardiovasculares. O macarrão ultrapassa 600mg/porção — muito acima dos demais.'},
-      {id:4,texto:'O que significa %VD na tabela nutricional? Se um alimento tem 30%VD de gordura saturada, é alto ou baixo?',gabarito:'%VD = quanto o nutriente representa da necessidade diária (dieta 2000kcal). Acima de 20% é ALTO; 30% de gordura saturada é excessivo.'},
-      {id:5,texto:'Compare proteínas do iogurte e do biscoito. Por que proteínas são fundamentais para adolescentes?',gabarito:'Iogurte tem proteínas de alto valor biológico. Adolescentes precisam para crescimento muscular, hormônios, enzimas e anticorpos.'},
-      {id:6,texto:'Diferencie carboidratos simples e complexos. Identifique um exemplo de cada nos alimentos analisados.',gabarito:'Simples (açúcares): digestão rápida, pico de glicose — biscoito/suco. Complexos (amido): digestão lenta, energia gradual — macarrão.'},
-      {id:7,texto:'Por que a gordura trans é a mais prejudicial? Alguma das tabelas nutricionais analisadas a contém? Explique os riscos.',gabarito:'Eleva LDL e reduz HDL, aumentando risco de AVC e infarto. O biscoito pode conter gordura trans hidrogenada.'},
-      {id:8,texto:'Qual a importância das fibras? Avalie o teor nos 4 alimentos e indique a melhor escolha.',gabarito:'Fibras regulam intestino, saciedade e flora intestinal. Alimentos in natura têm mais fibras que ultraprocessados.'},
-      {id:9,texto:'Explique valor energético e a relação entre excesso calórico e acúmulo de gordura corporal.',gabarito:'Calorias em excesso são armazenadas como lipídios. Ultraprocessados têm alta densidade calórica com baixo valor nutritivo.'},
-      {id:10,texto:'Faça análise comparativa: qual alimento é mais saudável e qual menos? Use 3 critérios nutricionais.',gabarito:'Critérios: sódio, gordura trans, fibras, açúcares adicionados, micronutrientes. Iogurte natural geralmente mais saudável; macarrão instantâneo menos.'}
-    ]
-  };
-  await sbPatch('sessoes_grupo',codigoSessao,{
-    status:'pronto',
-    alimentos:JSON.stringify(data.alimentos),
-    questoes:JSON.stringify(data.questoes),
-    imagens_b64:JSON.stringify([null,null,null,null])
-  });
-  renderResultado(data);
-  goScreen('s-result');
-  document.getElementById('codigo-result').textContent=codigoSessao;
-  iniciarEscutaNotebooks();
-}
-
-// ── RENDER RESULTADO ─────────────────────────
-function renderResultado(data){
-  const pc=['pg','pa','pb','pr'];
-  document.getElementById('food-list').innerHTML=data.alimentos.map(a=>`
-    <div class="food-item">
-      <div class="food-emoji">${a.emoji}</div>
-      <div class="food-info">
-        <div class="food-name">${a.numero}. ${a.nome}</div>
-        <div class="food-cat">${a.categoria}</div>
-        <div class="food-desc">${a.descricao_nutricional}</div>
-        <div class="pills">${a.nutrientes_principais.map((n,i)=>`<span class="pill ${pc[i%4]}">${n}</span>`).join('')}</div>
-      </div>
-    </div>`).join('');
-}
-
-// ── ESCUTA NOTEBOOKS VIA REALTIME ────────────
-function iniciarEscutaNotebooks(){
-  if(!sessaoId) return;
-  // Poll a cada 5s para ver quem conectou
-  setInterval(async()=>{
-    const r=await fetch(`${SB_URL}/rest/v1/respostas_aluno?codigo=eq.${codigoSessao}&select=aluno_nome,aluno_num,respostas`,
-      {headers:HEADERS});
-    const rows=await r.json();
-    if(!Array.isArray(rows)||!rows.length){
-      document.getElementById('nb-list').innerHTML='<p style="font-size:13px;color:var(--muted)">Aguardando conexão dos notebooks…</p>';
+    const s = rows[0];
+    if(s.status === 'aguardando'){
+      setLoad(false);
+      showCodeError('⏳ O celular do grupo ainda não iniciou a análise. Aguarde e tente novamente.');
       return;
     }
-    document.getElementById('nb-list').innerHTML=rows.map(r=>{
-      const resp=typeof r.respostas==='string'?JSON.parse(r.respostas):r.respostas;
-      const n=Object.values(resp).filter(v=>v&&v.trim()).length;
-      return `<div class="nb-item">
-        <span>${r.aluno_num} – ${r.aluno_nome}</span>
-        <span class="nb-prog">${n}/10 respondidas</span>
-      </div>`;
-    }).join('');
-  },5000);
+
+    sessao = {
+      ...s,
+      membros:  parseJ(s.membros),
+      alimentos:parseJ(s.alimentos),
+      questoes: parseJ(s.questoes),
+      imagens:  parseJ(s.imagens_b64)
+    };
+
+    // Se análise ainda em andamento, aguardar
+    if(s.status === 'analisando'){
+      setLoad(true, 'O celular está lendo as tabelas nutricionais… aguarde.');
+      aguardarPronto(codigo);
+      return;
+    }
+
+    setLoad(false);
+    mostrarSelecaoAluno();
+
+  }catch(e){ setLoad(false); showCodeError('Erro de conexão: '+e.message); }
 }
 
-// ── NOVA ATIVIDADE ───────────────────────────
-function novaAtividade(){
-  if(!confirm('Iniciar nova atividade? O código atual será encerrado.')) return;
-  imgs=[null,null,null,null]; sessaoId=null; codigoSessao=null;
-  goScreen('s-grupo');
+// Polling enquanto celular analisa
+function aguardarPronto(codigo){
+  const poll = setInterval(async()=>{
+    const r = await fetch(`${SB_URL}/rest/v1/sessoes_grupo?codigo=eq.${codigo}&select=status,alimentos,questoes,imagens_b64,membros,grupo_num,id`, {headers:HDR});
+    const rows = await r.json();
+    if(!rows || !rows.length) return;
+    const s = rows[0];
+    if(s.status === 'pronto'){
+      clearInterval(poll);
+      sessao = {
+        ...s,
+        membros:  parseJ(s.membros),
+        alimentos:parseJ(s.alimentos),
+        questoes: parseJ(s.questoes),
+        imagens:  parseJ(s.imagens_b64)
+      };
+      setLoad(false);
+      mostrarSelecaoAluno();
+    }
+  }, 3000);
 }
 
-// ── SUPABASE HELPERS ─────────────────────────
-async function sbPost(table,body){
-  const r=await fetch(`${SB_URL}/rest/v1/${table}`,{
-    method:'POST',
-    headers:{...HEADERS,'Prefer':'return=representation'},
-    body:JSON.stringify(body)
+function parseJ(v){ if(!v) return null; if(typeof v === 'string'){ try{return JSON.parse(v)}catch{return v} } return v; }
+
+// ── SELEÇÃO DO ALUNO ──────────────────────────
+function mostrarSelecaoAluno(){
+  const membros = sessao.membros || [];
+  const wrap = document.getElementById('mrows-nb');
+
+  document.getElementById('alert-membros').innerHTML =
+    `✅ Grupo <strong>${sessao.grupo_num}</strong> encontrado com ${membros.length} membro(s). Selecione seu nome:`;
+  document.getElementById('alert-membros').className = 'alert as';
+
+  wrap.innerHTML = membros.map((m,i) => `
+    <div class="mrow" id="nbmr${i}">
+      <span class="midx">${i+1}.</span>
+      <select id="nbms${i}" onchange="onAlunoSel(${i}, ${m.num}, '${m.nome.replace(/'/g,"\\'")}', this.value)">
+        <option value="">— Sou este aluno? —</option>
+        <option value="sim">✓ Sim, sou eu</option>
+      </select>
+      <div class="mnum" style="font-size:12px">N°${m.num}</div>
+    </div>
+    <div style="font-size:13px;font-weight:500;color:var(--text);padding:0 0 8px 30px">${m.nome}</div>
+  `).join('');
+
+  document.getElementById('btn-iniciar').disabled = true;
+}
+
+function onAlunoSel(idx, num, nome, val){
+  // Desmarcar outros
+  const membros = sessao.membros || [];
+  membros.forEach((_,i)=>{ if(i!==idx){ const s=document.getElementById('nbms'+i); if(s) s.value=''; }});
+
+  if(val === 'sim'){
+    alunoSel = {num, nome};
+    document.getElementById('btn-iniciar').disabled = false;
+  } else {
+    alunoSel = null;
+    document.getElementById('btn-iniciar').disabled = true;
+  }
+}
+
+// ── INICIAR ATIVIDADE ─────────────────────────
+async function iniciarAtividade(){
+  if(!alunoSel){ alert('Selecione seu nome.'); return; }
+  setLoad(true, 'Preparando atividade…');
+
+  // Verificar se já existe resposta para este aluno nesta sessão
+  const r = await fetch(
+    `${SB_URL}/rest/v1/respostas_aluno?codigo=eq.${sessao.codigo}&aluno_num=eq.${alunoSel.num}&select=id,respostas`,
+    {headers: HDR}
+  );
+  const rows = await r.json();
+
+  let respostasExistentes = {};
+  if(rows && rows.length){
+    respostaId = rows[0].id;
+    respostasExistentes = parseJ(rows[0].respostas) || {};
+  } else {
+    // Criar linha de resposta
+    const cr = await fetch(`${SB_URL}/rest/v1/respostas_aluno`, {
+      method:'POST',
+      headers:{...HDR,'Prefer':'return=representation'},
+      body: JSON.stringify({
+        sessao_id: sessao.id,
+        codigo: sessao.codigo,
+        aluno_num: alunoSel.num,
+        aluno_nome: alunoSel.nome,
+        respostas: {}
+      })
+    });
+    const crRows = await cr.json();
+    if(crRows && crRows[0]) respostaId = crRows[0].id;
+  }
+
+  setLoad(false);
+  renderAtividade(respostasExistentes);
+  goScreen('s-ativ');
+
+  // Auto-save a cada 30s
+  autoSaveInt = setInterval(()=>salvarTudo(true), 30000);
+}
+
+// ── RENDER ATIVIDADE ──────────────────────────
+function renderAtividade(respostasExistentes){
+  // Info bar
+  document.getElementById('grp-num-disp').textContent = `Grupo ${sessao.grupo_num}`;
+  document.getElementById('grp-code-disp').textContent = ` · Código: ${sessao.codigo}`;
+  document.getElementById('grp-aluno-disp').textContent = `${alunoSel.num} – ${alunoSel.nome.split(' ')[0]}`;
+
+  // Alimentos
+  const pc=['pg','pa','pb','pr'];
+  const imgs = sessao.imagens || [];
+  document.getElementById('food-grid').innerHTML = (sessao.alimentos||[]).map((a,i)=>`
+    <div class="food-card">
+      <div class="food-card-top">
+        ${imgs[i] ? `<img src="${imgs[i]}" alt="Tabela Nutricional ${i+1}">` : ''}
+        <span style="z-index:1;position:relative;font-size:32px">${imgs[i]?'':a.emoji}</span>
+      </div>
+      <div class="food-card-body">
+        <div class="food-card-name">${a.numero}. ${a.nome}</div>
+        <div class="food-card-cat">${a.categoria}</div>
+        <div class="food-card-desc">${a.descricao_nutricional}</div>
+        <div class="pills">${(a.nutrientes_principais||[]).map((n,j)=>`<span class="pill ${pc[j%4]}">${n}</span>`).join('')}</div>
+      </div>
+    </div>`).join('');
+
+  // Questões
+  document.getElementById('q-list').innerHTML = (sessao.questoes||[]).map(q=>`
+    <div class="q-item" id="qi-${q.id}">
+      <div class="q-text">${q.texto}</div>
+      <textarea class="q-answer" id="qa-${q.id}" rows="3"
+        placeholder="Escreva sua resposta aqui…"
+        oninput="onAnswerInput(${q.id})">${respostasExistentes['q'+q.id]||''}</textarea>
+      <div class="q-saved-lbl ${respostasExistentes['q'+q.id]?'show':''}" id="ql-${q.id}">✓ Salvo</div>
+      <div class="gabarito-item" id="gab-${q.id}" style="display:none;background:var(--green-l);border-left:3px solid var(--green);border-radius:0 8px 8px 0;padding:8px 12px;margin-top:8px;font-size:12px;color:var(--green);line-height:1.5">
+        <div style="font-size:10px;font-weight:700;text-transform:uppercase;margin-bottom:3px">📋 Gabarito</div>
+        ${q.gabarito}
+      </div>
+    </div>`).join('');
+
+  updateProgress(respostasExistentes);
+}
+
+function onAnswerInput(qid){
+  const v = (document.getElementById('qa-'+qid)||{}).value||'';
+  // Marcar como não salvo
+  const lbl = document.getElementById('ql-'+qid);
+  if(lbl){ lbl.textContent='…editando'; lbl.classList.add('show'); lbl.style.color='var(--amber)'; }
+  updateProgressFromDOM();
+}
+
+function updateProgressFromDOM(){
+  const total = (sessao.questoes||[]).length;
+  let filled = 0;
+  (sessao.questoes||[]).forEach(q=>{ const v=(document.getElementById('qa-'+q.id)||{}).value||''; if(v.trim()) filled++; });
+  const pct = total ? Math.round(filled/total*100) : 0;
+  document.getElementById('prog-fill').style.width = pct+'%';
+  document.getElementById('prog-txt').textContent = `${filled} / ${total}`;
+}
+
+function updateProgress(resps){
+  const total = (sessao.questoes||[]).length;
+  const filled = Object.values(resps).filter(v=>v&&v.trim()).length;
+  const pct = total ? Math.round(filled/total*100) : 0;
+  document.getElementById('prog-fill').style.width = pct+'%';
+  document.getElementById('prog-txt').textContent = `${filled} / ${total}`;
+}
+
+// ── GABARITO LOCAL (palavras-chave por questão) ───────────────
+const GABARITO_KW = [
+  ['macronutriente','carboidrato','proteina','lipidio','gordura','energia'],
+  ['micronutriente','vitamina','mineral','calcio','ferro','zinco'],
+  ['sodio','hipertensao','pressao','cardiovascular','rim','600'],
+  ['vd','valor diario','2000','kcal','porcao','referencia'],
+  ['proteina','aminoacido','muscul','crescimento','hormonio','reparo'],
+  ['simples','complexo','amido','acucar','glicose','digestao'],
+  ['trans','ldl','hdl','colesterol','cardiovascular','hidrogenada'],
+  ['fibra','intestin','saciedade','flora','microbiota','regulacao'],
+  ['caloria','energia','kcal','excesso','gordura','obesidade'],
+  ['saudavel','sodio','fibra','trans','micronutriente','processado']
+];
+
+function normalizar(txt){
+  return (txt||'').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g,'');
+}
+
+function calcularNota(respostas){
+  let total = 0;
+  const pontos = {};
+  GABARITO_KW.forEach((kws, i)=>{
+    const qk = 'q'+(i+1);
+    const resp = normalizar(respostas[qk]||'');
+    const acertos = kws.filter(kw=>resp.includes(normalizar(kw))).length;
+    let pts = 0;
+    if(acertos >= 2)       pts = 1;
+    else if(acertos === 1) pts = 0.5;
+    else if(resp.length > 80) pts = 0.3;
+    pontos[qk] = Math.round(pts*10)/10;
+    total += pts;
   });
-  return r.json();
+  return { nota: Math.min(10, Math.round(total*10)/10), pontos };
 }
 
-async function sbPatch(table,codigo,body){
-  return fetch(`${SB_URL}/rest/v1/${table}?codigo=eq.${codigo}`,{
+// ── SALVAR ────────────────────────────────────
+async function salvarTudo(silencioso){
+  if(!respostaId) return;
+  const resps = {};
+  (sessao.questoes||[]).forEach(q=>{
+    const v = (document.getElementById('qa-'+q.id)||{}).value||'';
+    resps['q'+q.id] = v;
+  });
+
+  // Calcular nota
+  const { nota, pontos } = calcularNota(resps);
+
+  // 1. Salvar no Supabase
+  await fetch(`${SB_URL}/rest/v1/respostas_aluno?id=eq.${respostaId}`,{
     method:'PATCH',
-    headers:{...HEADERS,'Prefer':'return=minimal'},
-    body:JSON.stringify(body)
+    headers:{...HDR,'Prefer':'return=minimal'},
+    body:JSON.stringify({respostas:resps, nota_calculada: nota, atualizado_em:new Date().toISOString()})
+  });
+
+  // 2. Enviar para Google Sheets via Apps Script
+  await enviarParaPlanilha(resps, nota, pontos);
+
+  // Atualizar labels e progress
+  (sessao.questoes||[]).forEach(q=>{
+    const v = resps['q'+q.id]||'';
+    const lbl=document.getElementById('ql-'+q.id);
+    const ta=document.getElementById('qa-'+q.id);
+    if(lbl){
+      if(v.trim()){ lbl.textContent='✓ Salvo'; lbl.classList.add('show'); lbl.style.color='var(--green-m)'; }
+      else{ lbl.classList.remove('show'); }
+    }
+    if(ta) ta.classList.toggle('saved', !!v.trim());
+  });
+  updateProgressFromDOM();
+
+  // Mostrar nota
+  mostrarNota(nota, pontos);
+
+  if(!silencioso){
+    const btn=document.getElementById('btn-salvar');
+    btn.textContent='✓ Salvo na planilha!';
+    setTimeout(()=>btn.textContent='💾 Salvar respostas',2000);
+  }
+}
+
+// ── ENVIAR PARA GOOGLE SHEETS ─────────────────
+async function enviarParaPlanilha(resps, nota, pontos){
+  if(!APPS_SCRIPT_URL || APPS_SCRIPT_URL === 'COLE_AQUI_A_URL_DO_APPS_SCRIPT') return;
+  try {
+    const payload = {
+      grupo_num:   sessao.grupo_num,
+      codigo:      sessao.codigo,
+      aluno_num:   alunoSel.num,
+      aluno_nome:  alunoSel.nome,
+      membros:     sessao.membros || [],
+      alimentos:   sessao.alimentos || [],
+      respostas:   resps,
+      pontos_por_questao: pontos,
+      nota:        nota,
+      data_envio:  new Date().toLocaleString('pt-BR')
+    };
+    await fetch(APPS_SCRIPT_URL, {
+      method:'POST',
+      mode:'no-cors',
+      headers:{'Content-Type':'text/plain'},
+      body: JSON.stringify(payload)
+    });
+  } catch(e){ console.warn('Sheets:', e.message); }
+}
+
+// ── MOSTRAR NOTA ──────────────────────────────
+function mostrarNota(nota, pontos){
+  let el = document.getElementById('nota-box');
+  if(!el){
+    el = document.createElement('div');
+    el.id = 'nota-box';
+    el.style.cssText='margin-bottom:14px;border-radius:10px;overflow:hidden;border:1px solid var(--border)';
+    document.getElementById('q-list').before(el);
+  }
+  const cor = nota>=7?'var(--green)':nota>=5?'#d97706':'var(--red)';
+  const bg  = nota>=7?'var(--green-l)':nota>=5?'var(--amber-l)':'var(--red-l)';
+  const msg = nota>=7?'Parabéns! Ótima resposta 🎉':nota>=5?'Bom trabalho! Revise os pontos perdidos.':'Atenção: revise o conteúdo com o professor.';
+  el.innerHTML=`
+    <div style="background:${cor};color:#fff;padding:10px 16px;display:flex;align-items:center;justify-content:space-between">
+      <span style="font-size:13px;font-weight:600">📊 Sua nota calculada</span>
+      <span style="font-size:26px;font-weight:900">${nota.toFixed(1)}</span>
+    </div>
+    <div style="background:${bg};padding:10px 16px">
+      <p style="font-size:12px;color:${cor};font-weight:600;margin-bottom:6px">${msg}</p>
+      <div style="display:flex;flex-wrap:wrap;gap:5px">
+        ${Object.entries(pontos).map(([k,v])=>`
+          <span style="font-size:11px;font-weight:700;padding:2px 8px;border-radius:10px;
+            background:${v>=1?'#dcfce7':v>0?'#fef3c7':'#fee2e2'};
+            color:${v>=1?'#15803d':v>0?'#92400e':'#991b1b'}">
+            ${k.toUpperCase()}: ${v}pt
+          </span>`).join('')}
+      </div>
+      <p style="font-size:11px;color:var(--muted);margin-top:6px">⚠️ Nota automática orientativa. O professor pode ajustar na planilha.</p>
+    </div>`;
+}
+
+// ── GABARITO ──────────────────────────────────
+function toggleGabarito(){
+  gabOn=!gabOn;
+  (sessao.questoes||[]).forEach(q=>{
+    const el=document.getElementById('gab-'+q.id);
+    if(el) el.style.display=gabOn?'block':'none';
   });
 }
 
-// ── NAV ──────────────────────────────────────
+// ── HELPERS ───────────────────────────────────
+function setLoad(on, txt){
+  document.getElementById('load-txt').textContent=txt||'Carregando…';
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  if(on) document.getElementById('s-load').classList.add('active');
+  else document.getElementById('s-connect').classList.add('active');
+}
+
 function goScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
+  window.scrollTo(0,0);
+}
+
+function showCodeError(msg){
+  const el=document.getElementById('code-error');
+  el.innerHTML=`<div class="alert ae">${msg}</div>`;
+  el.style.display='block';
 }
 </script>
 </body>
